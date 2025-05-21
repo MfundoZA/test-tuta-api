@@ -4,7 +4,6 @@ const port = process.env.PORT || 3001;
 console.log(`Example app listening on port ${port}!`);
 
 var createError = require('http-errors');
-var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
