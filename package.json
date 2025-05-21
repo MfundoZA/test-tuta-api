@@ -7,8 +7,9 @@
   "author": "Render Developers",
   "license": "MIT",
   "private": false,
+  "type": "commonjs",
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "express": "^5.0.0"

@@ -1,0 +1,119 @@
+const Database = require('better-sqlite3');
+
+// Initialize SQLite database
+const db = new Database('lessons.db');
+
+
+// Get all lessons
+const getLessons = (req, res) => {
+    try {
+        const lessons = db.prepare('SELECT * FROM lessons').all();
+        res.json(lessons);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get a single lesson by ID
+const getLessonById = (req, res) => {
+    try {
+        const lesson = db.prepare('SELECT * FROM lessons WHERE lesson_id = ?').get(req.params.id);
+        if (!lesson) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
+        res.json(lesson);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Create a new lesson
+const createLesson = (req, res) => {
+    try {
+        const {
+            title,
+            description,
+            video_url,
+            thumbnail_url,
+            duration,
+            subject_id,
+            grade_id,
+            created_by
+        } = req.body;
+
+        const result = db.prepare(`
+            INSERT INTO lessons (
+                title, description, video_url, thumbnail_url, 
+                duration, subject_id, grade_id, created_by,
+                uploaded_at, is_published, view_count
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, 0)
+        `).run(title, description, video_url, thumbnail_url, duration, subject_id, grade_id, created_by);
+
+        res.status(201).json({
+            message: 'Lesson created successfully',
+            lessonId: result.lastInsertRowid
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Update a lesson
+const updateLesson = (req, res) => {
+    try {
+        const lessonId = req.params.id;
+        const {
+            title,
+            description,
+            video_url,
+            thumbnail_url,
+            duration,
+            subject_id,
+            grade_id,
+            is_published
+        } = req.body;
+
+        const result = db.prepare(`
+            UPDATE lessons 
+            SET title = ?, description = ?, video_url = ?, 
+                thumbnail_url = ?, duration = ?, subject_id = ?,
+                grade_id = ?, is_published = ?,
+                published_at = CASE WHEN is_published = 1 AND published_at IS NULL 
+                                  THEN datetime('now') 
+                                  ELSE published_at 
+                             END
+            WHERE lesson_id = ?
+        `).run(title, description, video_url, thumbnail_url, duration, subject_id, grade_id, is_published, lessonId);
+
+        if (result.changes === 0) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
+
+        res.json({ message: 'Lesson updated successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Delete a lesson
+const deleteLesson = (req, res) => {
+    try {
+        const result = db.prepare('DELETE FROM lessons WHERE lesson_id = ?').run(req.params.id);
+        
+        if (result.changes === 0) {
+            return res.status(404).json({ message: 'Lesson not found' });
+        }
+
+        res.json({ message: 'Lesson deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+module.exports = {
+    getLessons,
+    getLessonById,
+    createLesson,
+    updateLesson,
+    deleteLesson
+};
