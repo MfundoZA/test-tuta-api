@@ -3,6 +3,24 @@ const Database = require('better-sqlite3');
 // Initialize SQLite database
 const db = new Database('lessons.db');
 
+db.prepare(`
+    CREATE TABLE IF NOT EXISTS lessons (
+        lesson_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT,
+        video_url TEXT NOT NULL,
+        thumbnail_url TEXT,
+        duration INTEGER NOT NULL,
+        subject_id INTEGER NOT NULL,
+        grade_id INTEGER NOT NULL,
+        created_by INTEGER NOT NULL,
+        uploaded_at TEXT DEFAULT (datetime('now')),
+        is_published INTEGER DEFAULT 0,
+        published_at TEXT,
+        view_count INTEGER DEFAULT 0
+    )
+`).run();
+
 
 // Get all lessons
 const getLessons = (req, res) => {
