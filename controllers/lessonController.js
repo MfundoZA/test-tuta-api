@@ -19,6 +19,7 @@ db.prepare(`
         published_at TEXT,
         view_count INTEGER DEFAULT 0
     )
+<<<<<<< HEAD
 `).run();
 
 
