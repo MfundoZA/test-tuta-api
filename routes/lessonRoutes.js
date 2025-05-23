@@ -12,6 +12,7 @@ const router = express.Router();
 // GET /lessons - Get all lessons
 router.get('/', getLessons)
 
+
 // GET /lessons/:id - Get a single lesson
 router.get('/:id', getLessonById)
 

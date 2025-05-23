@@ -24,9 +24,20 @@ db.prepare(`
 
 // Get all lessons
 const getLessons = (req, res) => {
+
     try {
-        const lessons = db.prepare('SELECT * FROM lessons').all();
-        res.json(lessons);
+        const subjectId = req.query.subject_id;
+
+        if (subjectId === undefined) {
+            const lessons = db.prepare('SELECT * FROM lessons').all();
+            res.json(lessons);
+        } else {
+            const lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ?').all(subjectId);
+            if (lessons.length === 0) {
+                return res.status(404).json({ message: 'No lessons found for this subject' });
+            }
+            res.json(lessons);
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
