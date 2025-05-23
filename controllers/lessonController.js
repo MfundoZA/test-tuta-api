@@ -28,10 +28,11 @@ const getLessons = (req, res) => {
     try {
         const subjectId = req.query.subject_id;
 
-        if (subjectId === undefined || subjectId === null) {
+        if (subjectId === undefined || subjectId === 'null') {
             const lessons = db.prepare('SELECT * FROM lessons').all();
             res.json(lessons);
         } else {
+            
             const lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ?').all(subjectId);
             if (lessons.length === 0) {
                 return res.status(404).json({ message: 'No lessons found for this subject' });
