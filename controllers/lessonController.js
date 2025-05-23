@@ -28,7 +28,7 @@ const getLessons = (req, res) => {
     try {
         const subjectId = req.query.subject_id;
 
-        if (subjectId === undefined) {
+        if (subjectId === undefined || subjectId === null) {
             const lessons = db.prepare('SELECT * FROM lessons').all();
             res.json(lessons);
         } else {
