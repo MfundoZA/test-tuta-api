@@ -142,7 +142,6 @@ const deleteLesson = (req, res) => {
 module.exports = {
     getLessons,
     getLessonById,
-    getlessonsBySubject,
     createLesson,
     updateLesson,
     deleteLesson
