@@ -24,15 +24,16 @@ db.prepare(`
 
 // Get all lessons
 const getLessons = (req, res) => {
-
     try {
         const subjectId = req.query.subject_id;
 
         if (subjectId === undefined || subjectId === 'null') {
             const lessons = db.prepare('SELECT * FROM lessons').all();
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
             res.json(lessons);
         } else {
-            
             const lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ?').all(subjectId);
             if (lessons.length === 0) {
                 return res.status(404).json({ message: 'No lessons found for this subject' });
@@ -54,6 +55,9 @@ const getLessonById = (req, res) => {
         if (!lesson) {
             return res.status(404).json({ message: 'Lesson not found' });
         }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         res.json(lesson);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -82,6 +86,9 @@ const createLesson = (req, res) => {
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, 0)
         `).run(title, description, video_url, thumbnail_url, duration, subject_id, grade_id, created_by);
 
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         res.status(201).json({
             message: 'Lesson created successfully',
             lessonId: result.lastInsertRowid
@@ -122,6 +129,9 @@ const updateLesson = (req, res) => {
             return res.status(404).json({ message: 'Lesson not found' });
         }
 
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         res.json({ message: 'Lesson updated successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -137,6 +147,9 @@ const deleteLesson = (req, res) => {
             return res.status(404).json({ message: 'Lesson not found' });
         }
 
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         res.json({ message: 'Lesson deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
