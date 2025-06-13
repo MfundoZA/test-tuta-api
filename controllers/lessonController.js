@@ -37,6 +37,9 @@ const getLessons = (req, res) => {
             if (lessons.length === 0) {
                 return res.status(404).json({ message: 'No lessons found for this subject' });
             }
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
             res.json(lessons);
         }
     } catch (error) {
