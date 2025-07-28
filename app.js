@@ -11,7 +11,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/userRoutes');
 var lessonRouter = require('./routes/lessonRoutes');
-var subjecRouter = require('./routes/subjectRoutes');
+var subjectRouter = require('./routes/subjectRoutes');
 
 
 // view engine setup
