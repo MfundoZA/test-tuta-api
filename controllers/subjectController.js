@@ -59,16 +59,15 @@ const getSubjectById = (req, res) => {
 const createSubject = (req, res) => {
     try {
         const {
-            title,
             name,
             description
         } = req.body;
 
         const result = db.prepare(`
             INSERT INTO subjects (
-                title, name, description
+                name, description
             ) VALUES (?, ?, ?)
-        `).run(title, name, description);
+        `).run(name, description);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -87,16 +86,15 @@ const updateSubject = (req, res) => {
     try {
         const subjectId = req.params.id;
         const {
-            title,
             name,
             description
         } = req.body;
 
         const result = db.prepare(`
             UPDATE subjects 
-            SET title = ?, name = ?, description = ?
+            SET name = ?, description = ?
             WHERE subject_id = ?
-        `).run(title, name, description, subjectId);
+        `).run(name, description, subjectId);
 
         if (result.changes === 0) {
             return res.status(404).json({ message: 'Subject not found' });
