@@ -66,7 +66,7 @@ const createSubject = (req, res) => {
         const result = db.prepare(`
             INSERT INTO subjects (
                 name, description
-            ) VALUES (?, ?, ?)
+            ) VALUES ( ?, ?)
         `).run(name, description);
 
         res.header('Access-Control-Allow-Origin', '*');
