@@ -12,6 +12,7 @@ var indexRouter = require('./routes/index');
 var userRouter = require('./routes/userRoutes');
 var lessonRouter = require('./routes/lessonRoutes');
 var subjectRouter = require('./routes/subjectRoutes');
+var curriculumRouter = require('./routes/curriculumRoutes');
 
 
 // view engine setup
@@ -27,7 +28,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/lessons', lessonRouter);
-app.use('/subjects', subjectRouter)
+app.use('/subjects', subjectRouter);
+app.use('/curriculums', curriculumRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

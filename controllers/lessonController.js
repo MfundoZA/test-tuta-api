@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 
 // Initialize SQLite database
-const db = new Database('lessons.db');
+const db = new Database('./data/lessons.db');
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS lessons (
