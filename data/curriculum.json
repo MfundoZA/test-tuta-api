@@ -1,0 +1,308 @@
+{
+  "curriculum": [
+    {
+      "subject": "business",
+      "grades": [
+        {
+          "grade": 10,
+          "terms": [
+            {
+              "term": 1,
+              "topics": [
+                "micro environment",
+                "market environment",
+                "macro environment",
+                "interrelationship between environments",
+                "Business sectors"
+              ]
+            },
+            {
+              "term": 2,
+              "topics": [
+                "Contemporary socioeconomic issues",
+                "Social responsibility",
+                "Entrepreneurship qualities",
+                "Forms of ownership"
+              ]
+            },
+            {
+              "term": 3,
+              "topics": [
+                "Creative thinking and problem solving",
+                "Business opportunity",
+                "Business location",
+                "Contracts",
+                "Presentation of Business information",
+                "Business Plan"
+              ]
+            },
+            {
+              "term": 4,
+              "topics": [
+                "Self-management",
+                "Relationship and team performance"
+              ]
+            }
+          ]
+        },
+        {
+          "grade": 11,
+          "terms": [
+            {
+              "term": 1,
+              "topics": [
+                "Influences on and control factors influencing business environments",
+                "Challenges in business environments",
+                "Adapting to challenges in business environments",
+                "Impact and challenges of contemporary socioeconomic issues on business operations",
+                "Business sectors",
+                "Benefits of a company versus other forms of ownership",
+                "Avenues of acquiring a business"
+              ]
+            },
+            {
+              "term": 2,
+              "topics": [
+                "Creative thinking and problem solving",
+                "Stress, crisis and change management",
+                "Transform a business plan into an action plan",
+                "Starting a business venture based on an action plan",
+                "Professionalism and ethics",
+                "Presentation of Business information"
+              ]
+            },
+            {
+              "term": 3,
+              "topics": [
+                "Assessment of entrepreneurial qualities in business",
+                "Citizenship roles and responsibilities",
+                "marketing activities, marketing in the formal and informal sectors",
+                "Use of technology for marketing",
+                "imports and exports",
+                "Foreign marketing",
+                "The alignment of foreign marketing and the production function",
+                "Production function"
+              ]
+            },
+            {
+              "term": 4,
+              "topics": [
+                "Team Stages, dynamics theories and conflict management",
+                "introduction to the human Resources function"
+              ]
+            }
+          ]
+        },
+        {
+          "grade": 12,
+          "terms": [
+            {
+              "term": 1,
+              "topics": [
+                "Impact of recent legislation on business - response to demands for redress and equity",
+                "Human Resources function",
+                "Professionalism and ethics",
+                "Creative thinking",
+                "Devise strategies to enable a business to respond to the challenges of the macro business environment"
+              ]
+            },
+            {
+              "term": 2,
+              "topics": [
+                "Corporate social responsibility",
+                "human Rights, inclusivity and environmental issues",
+                "Team performance assessment and Conflict management",
+                "Business sectors and their environments",
+                "management and leadership",
+                "Quality of performance within business functions"
+              ]
+            },
+            {
+              "term": 3,
+              "topics": [
+                "Investment: Securities",
+                "Investment: insurance",
+                "Forms of ownership and their impact on the business operation",
+                "Presentation of information and data response",
+                "Revision and preparation for mid-year examination"
+              ]
+            },
+            {
+              "term": 4,
+              "topics": [
+                "Revision and preparation for the final external examination"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subject": "Maths",
+      "grade": 10,
+      "terms": [
+        {
+          "term": 1,
+          "topics": [
+            {
+              "topic": "Algebraic expressions",
+              "subtopics": [
+                "Introduction",
+                "The real number system",
+                "Rational and irrational numbers",
+                "Rounding off",
+                "Estimating surds",
+                "Products",
+                "Factorisation",
+                "Simplification of fractions"
+              ]
+            },
+            {
+              "topic": "Exponents",
+              "subtopics": [
+                "Introduction",
+                "Revision of exponent laws",
+                "Rational exponents",
+                "Exponential equations"
+              ]
+            },
+            {
+              "topic": "Number patterns",
+              "subtopics": [
+                "Introduction",
+                "Describing sequences"
+              ]
+            },
+            {
+              "topic": "Equations and inequalities",
+              "subtopics": [
+                "Introduction",
+                "Solving linear equations",
+                "Solving quadratic equations",
+                "Solving simultaneous equations",
+                "Word problems",
+                "Literal equations",
+                "Solving linear inequalities"
+              ]
+            },
+            {
+              "topic": "Trigonometry",
+              "subtopics": [
+                "Introduction",
+                "Similarity of triangles",
+                "Defining the trigonometric ratios",
+                "Reciprocal ratios",
+                "Calculator skills",
+                "Special angles",
+                "Solving trigonometric equations",
+                "Defining ratios in the Cartesian plane"
+              ]
+            }
+          ]
+        },
+        {
+          "term": 2,
+          "topics": [
+            {
+              "topic": "Functions",
+              "subtopics": [
+                "Introduction",
+                "Linear functions",
+                "Quadratic functions",
+                "Hyperbolic functions",
+                "Exponential functions",
+                "Trigonometric functions",
+                "Interpretation of graphs"
+              ]
+            },
+            {
+              "topic": "Trig Functions",
+              "subtopics": []
+            },
+            {
+              "topic": "Euclidean Geometry",
+              "subtopics": [
+                "Introduction",
+                "Triangles",
+                "Quadrilaterals",
+                "The mid-point theorem"
+              ]
+            },
+            {
+              "topic": "Analytical Geometry",
+              "subtopics": [
+                "Drawing figures on the Cartesian plane",
+                "Distance between two points",
+                "Gradient of a line",
+                "Mid-point of a line"
+              ]
+            }
+          ]
+        },
+        {
+          "term": 3,
+          "topics": [
+            {
+              "topic": "Finance and Growth",
+              "subtopics": [
+                "Introduction",
+                "Simple interest",
+                "Compound interest",
+                "Calculations using simple and compound interest",
+                "Foreign exchange rates"
+              ]
+            },
+            {
+              "topic": "Statistics",
+              "subtopics": [
+                "Collecting data",
+                "Measures of central tendency",
+                "Grouping data",
+                "Measures of dispersion",
+                "Five number summary"
+              ]
+            },
+            {
+              "topic": "Trigonometry",
+              "subtopics": [
+                "Two-dimensional problems"
+              ]
+            },
+            {
+              "topic": "Euclidean Geometry",
+              "subtopics": [
+                "Proofs and conjectures"
+              ]
+            },
+            {
+              "topic": "Measurement",
+              "subtopics": [
+                "Area of a polygon",
+                "Right prisms and cylinders",
+                "Right pyramids, right cones and spheres",
+                "The effect of multiplying a dimension by a factor of k"
+              ]
+            }
+          ]
+        },
+        {
+          "term": 4,
+          "topics": [
+            {
+              "topic": "Probability",
+              "subtopics": [
+                "Theoretical probability",
+                "Relative frequency",
+                "Venn diagrams",
+                "Union and intersection",
+                "Probability identities",
+                "Mutually exclusive events",
+                "Complementary events"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

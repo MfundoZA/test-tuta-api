@@ -1,8 +1,27 @@
 // Get a single curriculum by ID
 const getCurriculumBySubject = (req, res) => {
     var subjectName = req.params.subject;
+const fs = require('fs');
+    var curriculum;
+
     console.log(subjectName);
-    var curriculum = getCurriculum(subjectName);
+
+    if (subjectName === 'business') {
+        
+        fs.readFile('../data/curriculum.json', 'utf8', (err, jsonResponse)=> {
+            if (err) {
+                console.error("Error reading file:", err);
+                return;
+            }
+
+            try {
+                curriculum = JSON.parse(jsonString);
+            }
+            catch (parseErr) {
+                console.error("Error parsing JSON:", parseErr);
+            }
+        });
+    }
 
     try {
         if (!curriculum) {
@@ -12,7 +31,47 @@ const getCurriculumBySubject = (req, res) => {
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
 
-        res.json(curriculum);
+        res.json(curriculum[subjectName]['grades']);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const getCurriculumBySubjectAndGrade = (req, res) => {
+    var subjectName = req.params.subject;
+    var grade = req.params.grade;
+
+    const fs = require('fs');
+    var curriculum;
+
+    console.log(subjectName);
+
+    if (subjectName === 'business') {
+        
+        fs.readFile('../data/curriculum.json', 'utf8', (err, jsonResponse)=> {
+            if (err) {
+                console.error("Error reading file:", err);
+                return;
+            }
+
+            try {
+                curriculum = JSON.parse(jsonString);
+            }
+            catch (parseErr) {
+                console.error("Error parsing JSON:", parseErr);
+            }
+        });
+    }
+
+    try {
+        if (!curriculum) {
+            return res.status(404).json({ message: 'Curriculum not found' });
+        }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+
+        res.json(curriculum[subjectName]['grades']);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -222,6 +281,7 @@ const deleteCurriculum = (req, res) => {
 
 module.exports = {
     getCurriculumBySubject,
+    getCurriculumBySubjectAndGrade,
     updateCurriculum,
     deleteCurriculum
 };
