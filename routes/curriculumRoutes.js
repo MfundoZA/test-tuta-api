@@ -2,6 +2,7 @@ const express = require('express');
 const {
   //getCurriculums,
   getCurriculumBySubject,
+  getCurriculumBySubjectAndGrade
   //createCurriculum,
   //updateCurriculum,
   //deleteCurriculum
@@ -14,7 +15,9 @@ const router = express.Router();
 
 
 // GET /curriculums/:id - Get a single curriculum
-router.get('/:subject', getCurriculumBySubject)
+router.get('/:subject', getCurriculumBySubject);
+
+router.get('/:subject/:grade', getCurriculumBySubjectAndGrade);
 
 // POST /curriculums - Create new curriculum
 // router.post('/', createCurriculum);
