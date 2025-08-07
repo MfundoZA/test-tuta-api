@@ -84,7 +84,7 @@ const getCurriculumBySubjectAndGrade = (req, res) => {
                 return res.status(404).json({ message: `Grade ${gradeParam} not found for ${subjectName}.` });
             }
         
-        res.json(gradeCurriculum);
+        res.json(gradeCurriculum['terms']);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
