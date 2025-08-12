@@ -86,12 +86,12 @@ const createLesson = (req, res) => {
         const {
             title,
             description,
-            video_url,
-            thumbnail_url,
+            videoUrl,
+            thumbnailUrl,
             duration,
-            subject_id,
-            grade_id,
-            created_by
+            subjectId,
+            gradeId,
+            createdBy
         } = req.body;
 
         const result = db.prepare(`
@@ -100,7 +100,7 @@ const createLesson = (req, res) => {
                 duration, subject_id, grade_id, created_by,
                 uploaded_at, is_published, view_count
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, 0)
-        `).run(title, description, video_url, thumbnail_url, duration, subject_id, grade_id, created_by);
+        `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, gradeId, createdBy);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -156,6 +156,8 @@ const updateLesson = (req, res) => {
 
 // Delete a lesson
 const deleteLesson = (req, res) => {
+    print(req.params.id + ': ' + typeof req.params.id);
+
     try {
         const result = db.prepare('DELETE FROM lessons WHERE lesson_id = ?').run(req.params.id);
         
