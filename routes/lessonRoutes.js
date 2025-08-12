@@ -2,6 +2,7 @@ const express = require('express');
 const {
   getLessons,
   getLessonById,
+  getLessonsByTitle,
   createLesson,
   updateLesson,
   deleteLesson
@@ -10,11 +11,14 @@ const {
 const router = express.Router();
 
 // GET /lessons - Get all lessons
-router.get('/', getLessons)
+router.get('/', getLessons);
 
 
 // GET /lessons/:id - Get a single lesson
-router.get('/:id', getLessonById)
+router.get('/:id', getLessonById);
+
+// GET /lessons/title/:title - Get lessons by title
+router.get('/title/:title', getLessonsByTitle);
 
 // POST /lessons - Create new lesson
 router.post('/', createLesson);

@@ -64,6 +64,22 @@ const getLessonById = (req, res) => {
     }
 };
 
+// Todo: Get lesson by title
+const getLessonsByTitle = (req, res) => {
+    try {
+        const lessons = db.prepare('SELECT * FROM lessons WHERE title = ?').get(req.params.title);
+        if (!lessons) {
+            return res.status(404).json({ message: 'Lessons not found' });
+        }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+        res.json(lessons);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 // Create a new lesson
 const createLesson = (req, res) => {
     try {
@@ -159,6 +175,7 @@ const deleteLesson = (req, res) => {
 module.exports = {
     getLessons,
     getLessonById,
+    getLessonsByTitle,
     createLesson,
     updateLesson,
     deleteLesson
