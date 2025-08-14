@@ -9,15 +9,11 @@
             {
               "term": 1,
               "topics": [
-                {"micro environment": [
-                  "Sub topic A",
-                  "Sub topic B",
-                  "Sub topic C"
-                ]},
-                {"market environment": []},
-                {"macro environment": []},
-                {"interrelationship between environments": []},
-                {"Business sectors": []}
+                "micro environment",
+                "market environment",
+                "macro environment",
+                "interrelationship between environments",
+                "Business sectors"
               ]
             },
             {
