@@ -66,6 +66,11 @@ const getLessonById = (req, res) => {
 
 // Todo: Get lesson by title
 const getLessonsByTitle = (req, res) => {
+    console.log(req.params.title);
+
+    var title = req.params.title.replace(':', '');
+
+
     try {
         const lessons = db.prepare('SELECT * FROM lessons WHERE title = ?').get(req.params.title);
         if (!lessons) {
