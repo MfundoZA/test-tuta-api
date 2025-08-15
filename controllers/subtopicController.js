@@ -7,7 +7,7 @@ db.prepare(`
     CREATE TABLE IF NOT EXISTS subtopics (
         subtopic_id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT,
-        order INTEGER
+        "order" INTEGER
         topic_id INTEGER
     )
 `).run();
@@ -105,7 +105,7 @@ const createSubtopic = (req, res) => {
 
         const result = db.prepare(`
             INSERT INTO topics (
-                title, order, topic_id
+                title, "order", topic_id
             ) VALUES (?, ?, ?, ?)
         `).run(title, order, topicId);
 
