@@ -13,7 +13,10 @@ var userRouter = require('./routes/userRoutes');
 var lessonRouter = require('./routes/lessonRoutes');
 var subjectRouter = require('./routes/subjectRoutes');
 var curriculumRouter = require('./routes/curriculumRoutes');
-
+var gradeRouter = require('./routes/gradeRoutes');
+var termRouter = require('./routes/termRoutes');
+var topicRouter = require('./routes/topicRoutes');
+var subtopicsRouter = require('./routes/subtopicRoutes');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +33,11 @@ app.use('/users', userRouter);
 app.use('/lessons', lessonRouter);
 app.use('/subjects', subjectRouter);
 app.use('/curriculums', curriculumRouter);
+app.use('/grades', gradeRouter);
+app.use('/terms', termRouter);
+app.use('/topics', topicRouter);
+app.use('/subtopics', subtopicsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
