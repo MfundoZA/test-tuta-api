@@ -21,7 +21,7 @@ router.get('/', getSubtopics);
 router.get('/:id', getSubtopicsById);
 
 // GET /subtopics/title/:title - Get subtopics by title
-router.get('/title/:title', getSubtopicsBySubjectGradeTerm);
+//router.get('/title/:title', getSubtopicsBySubjectGradeTerm);
 
 // POST /subtopics - Create new topic
 router.post('/', createSubtopic);
