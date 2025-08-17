@@ -17,8 +17,11 @@ db.prepare(`
 const getSubtopics = (req, res) => {
     try {
 
-        if (topicId === undefined || topicId === 'null') {
-            const topics = db.prepare('SELECT * FROM topics').all();
+        console.log('Is this method even being hit?!');
+        
+        if (/*topicId === undefined || topicId === 'null' */true) {
+            console.log('Topics is null');
+            const topics = db.prepare('SELECT * FROM subtopics').all();
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
             res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
@@ -41,7 +44,7 @@ const getSubtopics = (req, res) => {
 // Get a single topic by ID
 const getSubtopicById = (req, res) => {
     try {
-        const topic = db.prepare('SELECT * FROM topics WHERE subtopic_id = ?').get(req.params.id);
+        const topic = db.prepare('SELECT * FROM subtopics WHERE subtopic_id = ?').get(req.params.id);
         if (!topic) {
             return res.status(404).json({ message: 'Subtopic not found' });
         }
@@ -61,7 +64,7 @@ const getSubtopicsById = (req, res) => {
     console.log(title);
 
     try {
-        const topics = db.prepare('SELECT * FROM topics WHERE topic_id = ?').get(title);
+        const topics = db.prepare('SELECT * FROM subtopics WHERE topic_id = ?').get(title);
         if (!topics) {
             return res.status(404).json({ message: 'Subtopics not found' });
         }
@@ -100,14 +103,16 @@ const createSubtopic = (req, res) => {
         const {
             title,
             order,
-            topicId
+            topic_id
         } = req.body;
 
+        console.log(req.body);
+
         const result = db.prepare(`
-            INSERT INTO topics (
+            INSERT INTO subtopics (
                 title, "order", topic_id
-            ) VALUES (?, ?, ?, ?)
-        `).run(title, order, topicId);
+            ) VALUES (?, ?, ?)
+        `).run(title, order, topic_id);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -133,7 +138,7 @@ const updateSubtopic = (req, res) => {
         } = req.body;
 
         const result = db.prepare(`
-            UPDATE topics 
+            UPDATE subtopics 
             SET title = ?, subject_id = ?, grade_id = ?, term_id = ?
             WHERE topic_id = ?
         `).run(title, subjectId, gradeId, termId, topicId);
@@ -158,7 +163,7 @@ const deleteSubtopic = (req, res) => {
     var id = req.params.id.replace(':', '');
 
     try {
-        const result = db.prepare('DELETE FROM topics WHERE topic_id = ?').run(id);
+        const result = db.prepare('DELETE FROM subtopics WHERE topic_id = ?').run(id);
 
         if (result.changes === 0) {
             return res.status(404).json({ message: 'Subtopic not found' });
