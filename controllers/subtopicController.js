@@ -77,26 +77,6 @@ const getSubtopicsById = (req, res) => {
     }
 };
 
-// Todo: Get topic by title
-const getSubtopicsBySubjectGradeTerm = (req, res) => {
-    var subject = parseInt(req.params.subject.replace(':', ''));
-    var grade = parseInt(req.params.grade.replace(':', ''));
-    var term = parseInt(req.params.term.replace(':', ''));
-
-    try {
-        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ?, grade_id = ?, term_id = ?').get(subject, grade, term);
-        if (!topics) {
-            return res.status(404).json({ message: 'Subtopics not found' });
-        }
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-        res.json(topics);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 // Create a new topic
 const createSubtopic = (req, res) => {
     try {
@@ -182,7 +162,6 @@ module.exports = {
     getSubtopics,
     getSubtopicById,
     getSubtopicsById,
-    getSubtopicsBySubjectGradeTerm,
     createSubtopic,
     updateSubtopic,
     deleteSubtopic
