@@ -78,11 +78,11 @@ const getTopicsByTitle = (req, res) => {
 
 const getTopicsBySubjectAndGrade = (req, res) => {
     var subject = parseInt(req.params.subject.replace(':', ''));
-    var grade = parseInt(req.params.grade.replace(':',''));
+    var grade = parseInt(req.params.grade.replace(':', ''));
 
 
     try {
-        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ? AND grade_id = ?').get(subject, grade);
+        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ? AND grade_id = ?').all(subject, grade);
 
         if (!topics) {
             return res.status(404).json({ message: 'Topics not found' });
