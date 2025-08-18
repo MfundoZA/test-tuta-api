@@ -1,7 +1,11 @@
 const Database = require('better-sqlite3');
+// import path
+const path = require('path');
+
+const dbPath = path.join(process.cwd(), '/data', 'users.db');
 
 // Initialize SQLite database
-const db = new Database('./data/users.db');
+const db = new Database(dbPath);
 
 // Create users table if it doesn't exist
 db.prepare(`

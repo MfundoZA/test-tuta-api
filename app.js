@@ -3,10 +3,13 @@ const app = express();
 const port = process.env.PORT || 3001;
 console.log(`Example app listening on port ${port}!`);
 
+
 var createError = require('http-errors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+
+console.log('Path:' + path.join(process.cwd(), '/data', 'users.db'));
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/userRoutes');
