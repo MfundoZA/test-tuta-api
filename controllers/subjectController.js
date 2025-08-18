@@ -41,8 +41,10 @@ const getSubjects = (req, res) => {
 
 // Get a single subject by ID
 const getSubjectById = (req, res) => {
+    var subjectId = parseInt(req.params.id).replace(':', '');
+
     try {
-        const subject = db.prepare('SELECT * FROM subjects WHERE subject_id = ?').get(req.params.id);
+        const subject = db.prepare('SELECT * FROM subjects WHERE subject_id = ?').get(subjectId);
         if (!subject) {
             return res.status(404).json({ message: 'Subject not found.' });
         }
