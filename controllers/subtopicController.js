@@ -64,7 +64,7 @@ const getSubtopicsById = (req, res) => {
     console.log(title);
 
     try {
-        const topics = db.prepare('SELECT * FROM subtopics WHERE topic_id = ?').get(title);
+        const topics = db.prepare('SELECT * FROM subtopics WHERE topic_id = ?').all(title);
         if (!topics) {
             return res.status(404).json({ message: 'Subtopics not found' });
         }
