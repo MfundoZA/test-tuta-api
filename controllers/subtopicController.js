@@ -59,12 +59,12 @@ const getSubtopicById = (req, res) => {
 
 // Todo: Get topic by title
 const getSubtopicsById = (req, res) => {
-    var title = req.params.title.replace(':', '');
+    var id = req.params.id.replace(':', '');
 
-    console.log(title);
+    console.log(id);
 
     try {
-        const topics = db.prepare('SELECT * FROM subtopics WHERE topic_id = ?').all(title);
+        const topics = db.prepare('SELECT * FROM subtopics WHERE topic_id = ?').all(id);
         if (!topics) {
             return res.status(404).json({ message: 'Subtopics not found' });
         }
