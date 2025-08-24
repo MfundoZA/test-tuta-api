@@ -7,6 +7,9 @@ class Lesson {
     #duration = 0; // In seconds
     #subjectId = 0;
     #gradeId = 0;
+    #termId = 0;
+    #topicId = 0;
+    #subtopicId = 0;
     #createdBy = "";
     #uploadedAt = "";
     #isPublished = false; // Changed to boolean
@@ -79,6 +82,30 @@ class Lesson {
 
     get getGradeId() {
         return this.#gradeId;
+    }
+
+    set setTermId(termId) {
+        this.#termId = termId;
+    }
+
+    get getTermId() {
+        return this.#termId;
+    }
+
+    set setTopicId(topicId) {
+        this.#topicId = topicId;
+    }
+
+    get getTopicId() {
+        return this.#topicId;
+    }
+
+    set setSubtopicId(subtopicId) {
+        this.#subtopicId = subtopicId;
+    }
+
+    get getSubtopicId() {
+        return this.#subtopicId;
     }
 
     set setCreatedBy(createdBy) {

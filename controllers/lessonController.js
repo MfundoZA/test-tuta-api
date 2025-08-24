@@ -13,6 +13,9 @@ db.prepare(`
         duration INTEGER NOT NULL,
         subject_id INTEGER NOT NULL,
         grade_id INTEGER NOT NULL,
+        term_id INTEGER NOT NULL,
+        topic_id INTEGER NOT NULL,
+        subtopic_id INTEGER NOT NULL,
         created_by INTEGER NOT NULL,
         uploaded_at TEXT DEFAULT (datetime('now')),
         is_published INTEGER DEFAULT 0,
@@ -84,6 +87,98 @@ const getLessonsByTitle = (req, res) => {
     }
 };
 
+// Get lessons by tutor
+const getLessonsByTutor = (req, res) => {
+    try {
+        const lessons = db.prepare('SELECT * FROM lessons WHERE created_by = ?').all(req.params.tutorId);
+        if (lessons.length === 0) {
+            return res.status(404).json({ message: 'No lessons found for this tutor' });
+        }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+        res.json(lessons);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get lessons by subject
+const getLessonsBySubject = (req, res) => {
+    if (req.params.gradeId != 'null') {
+        whereStmt = ' AND grade_id = ?';
+    }
+
+    if (req.params.termId != 'null') {
+        whereStmt += ' AND term_id = ?';
+    }
+
+    try {
+        var lessons;
+
+        if (req.params.gradeId === 'null' && req.params.termId === 'null') {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ?').all(req.params.subjectId);
+        }
+        else if (req.params.gradeId != 'null' && req.params.termId === 'null') {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ?').all(req.params.subjectId, req.params.gradeId);
+        }
+        else if (req.params.gradeId === 'null' && req.params.termId != 'null') {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND term_id = ?').all(req.params.subjectId, req.params.termId);
+        }
+        else {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId);
+        }
+
+        if (lessons.length === 0) {
+            return res.status(404).json({ message: 'No lessons found for this subject' });
+        }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+        res.json(lessons);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get lessons by topic
+const getLessonsByTopic = (req, res) => {
+    if (req.params.topicId != 'null') {
+        whereStmt = ' AND topic_id = ?';
+    }
+
+    if (req.params.subtopicId != 'null') {
+        whereStmt += ' AND subtopic_id = ?';
+    }
+
+    try {
+        var lessons;
+
+        if (req.params.topicId === 'null' && req.params.subtopicId === 'null') {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId);
+        }
+        else if (req.params.topicId != 'null' && req.params.subtopicId === 'null') {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND topic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.topicId);
+        }
+        else if (req.params.topicId === 'null' && req.params.subtopicId != 'null') {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND subtopic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.subtopicId);
+        }
+        else {
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND topic_id = ? AND subtopic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.topicId, req.params.subtopicId);
+        }
+
+        if (lessons.length === 0) {
+            return res.status(404).json({ message: 'No lessons found for this topic' });
+        }
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+        res.json(lessons);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
+
 // Create a new lesson
 const createLesson = (req, res) => {
     try {
@@ -95,16 +190,19 @@ const createLesson = (req, res) => {
             duration,
             subjectId,
             gradeId,
+            termId,
+            topicId,
+            subtopicId,
             createdBy
         } = req.body;
 
         const result = db.prepare(`
             INSERT INTO lessons (
                 title, description, video_url, thumbnail_url, 
-                duration, subject_id, grade_id, created_by,
+                duration, subject_id, grade_id, term_id, topic_id, subtopic_id, created_by,
                 uploaded_at, is_published, view_count
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, 0)
-        `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, gradeId, createdBy);
+        `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, gradeId, termId, topicId, subtopicId, createdBy);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -130,6 +228,9 @@ const updateLesson = (req, res) => {
             duration,
             subject_id,
             grade_id,
+            termId,
+            topicId,
+            subtopicId,
             is_published
         } = req.body;
 
@@ -137,7 +238,7 @@ const updateLesson = (req, res) => {
             UPDATE lessons 
             SET title = ?, description = ?, video_url = ?, 
                 thumbnail_url = ?, duration = ?, subject_id = ?,
-                grade_id = ?, is_published = ?,
+                grade_id = ?, term_id = ?, topic_id = ?, subtopic_id = ?, is_published = ?,
                 published_at = CASE WHEN is_published = 1 AND published_at IS NULL 
                                   THEN datetime('now') 
                                   ELSE published_at 
@@ -182,6 +283,9 @@ module.exports = {
     getLessons,
     getLessonById,
     getLessonsByTitle,
+    getLessonsByTutor,
+    getLessonsBySubject,
+    getLessonsByTopic,
     createLesson,
     updateLesson,
     deleteLesson

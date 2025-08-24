@@ -5,7 +5,10 @@ const {
   getLessonsByTitle,
   createLesson,
   updateLesson,
-  deleteLesson
+  deleteLesson,
+  getLessonsByTutor,
+  getLessonsBySubject,
+  getLessonsByTopic
 } = require('../controllers/lessonController');
 
 const router = express.Router();
@@ -19,6 +22,15 @@ router.get('/:id', getLessonById);
 
 // GET /lessons/title/:title - Get lessons by title
 router.get('/title/:title', getLessonsByTitle);
+
+// GET /lessons/user/:id - Get lessons by user id
+router.get('/user/:id', getLessonsByTutor);
+
+// GET /lessons/subject/:subjectId/grade/:gradeId/term/:termId
+router.get('/subject/:subjectId/grade/:gradeId/term/:termId', getLessonsBySubject);
+
+// GET /lessons/topic/:topicId/subtopic/:subtopicId/
+router.get('/topic/:topicId/subtopic/:subtopicId/', getLessonsByTopic);
 
 // POST /lessons - Create new lesson
 router.post('/', createLesson);
