@@ -200,8 +200,8 @@ const createLesson = (req, res) => {
             INSERT INTO lessons (
                 title, description, video_url, thumbnail_url, 
                 duration, subject_id, grade_id, term_id, topic_id, subtopic_id, created_by,
-                uploaded_at, is_published, view_count
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, 0)
+                uploaded_at, is_published, published_at, view_count
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, null, 0)
         `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, gradeId, termId, topicId, subtopicId, createdBy);
 
         res.header('Access-Control-Allow-Origin', '*');
@@ -223,15 +223,19 @@ const updateLesson = (req, res) => {
         const {
             title,
             description,
-            video_url,
-            thumbnail_url,
+            videoUrl,
+            thumbnailUrl,
             duration,
-            subject_id,
-            grade_id,
+            subjectId,
+            gradeId,
             termId,
             topicId,
             subtopicId,
-            is_published
+            createdBy,
+            uploadedAt,
+            isPublished,
+            publishedAt,
+            viewCount
         } = req.body;
 
         const result = db.prepare(`
@@ -243,8 +247,9 @@ const updateLesson = (req, res) => {
                                   THEN datetime('now') 
                                   ELSE published_at 
                              END
+                created_by = ?, uploaded_at = ?, view_count = ?
             WHERE lesson_id = ?
-        `).run(title, description, video_url, thumbnail_url, duration, subject_id, grade_id, is_published, lessonId);
+        `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, gradeId, isPublished, lessonId, termId, topicId, subtopicId, isPublished, publishedAt, createdBy, uploadedAt, viewCount);
 
         if (result.changes === 0) {
             return res.status(404).json({ message: 'Lesson not found' });
