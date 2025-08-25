@@ -143,6 +143,8 @@ const getLessonsBySubject = (req, res) => {
 
 // Get lessons by topic
 const getLessonsByTopic = (req, res) => {
+var whereStmt= '';
+
     if (req.params.topicId != 'null') {
         whereStmt = ' AND topic_id = ?';
     }
