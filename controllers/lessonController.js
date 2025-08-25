@@ -158,10 +158,11 @@ const getLessonsByTopic = (req, res) => {
             lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId);
         }
         else if (req.params.topicId != 'null' && req.params.subtopicId === 'null') {
-            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND topic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.topicId);
+            lessons = db.prepare('SELECT * FROM lessons WHERE topic_id = ?').all(req.params.topicId);
         }
         else if (req.params.topicId === 'null' && req.params.subtopicId != 'null') {
-            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND subtopic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.subtopicId);
+            console.log('Condition met!');
+            lessons = db.prepare('SELECT * FROM lessons WHERE subtopic_id = ?').all(req.params.subtopicId);
         }
         else {
             lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND topic_id = ? AND subtopic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.topicId, req.params.subtopicId);
