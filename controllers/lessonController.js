@@ -105,6 +105,12 @@ const getLessonsByTutor = (req, res) => {
 
 // Get lessons by subject
 const getLessonsBySubject = (req, res) => {
+    var query = `   ATTACH DATABASE 'users.db' AS usersDb;
+                    SELECT lessons.*, users.userId, users.firstName, users.lastName 
+                    FROM lessons 
+                    JOIN usersDb.users AS users ON lessons.created_by = users.userId 
+    `;
+
     if (req.params.gradeId != 'null') {
         whereStmt = ' AND grade_id = ?';
     }
@@ -143,7 +149,13 @@ const getLessonsBySubject = (req, res) => {
 
 // Get lessons by topic
 const getLessonsByTopic = (req, res) => {
-var whereStmt= '';
+    db.prepare("ATTACH DATABASE './data/users.db' AS usersDb;").run();
+
+    var query = `   SELECT lessons.*, users.userId, users.firstName, users.lastName 
+                    FROM lessons 
+                    JOIN usersDb.users AS users ON lessons.created_by = users.userId 
+    `;
+    var whereStmt= '';
 
     if (req.params.topicId != 'null') {
         whereStmt = ' AND topic_id = ?';
@@ -164,11 +176,13 @@ var whereStmt= '';
         }
         else if (req.params.topicId === 'null' && req.params.subtopicId != 'null') {
             console.log('Condition met!');
-            lessons = db.prepare('SELECT * FROM lessons WHERE subtopic_id = ?').all(req.params.subtopicId);
+            lessons = db.prepare( query + ' WHERE subtopic_id = ?').all(req.params.subtopicId);
         }
         else {
             lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND topic_id = ? AND subtopic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.topicId, req.params.subtopicId);
         }
+
+        db.prepare("DETACH DATABASE usersDb;").run();
 
         if (lessons.length === 0) {
             return res.status(404).json({ message: 'No lessons found for this topic' });
@@ -178,6 +192,7 @@ var whereStmt= '';
         res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         res.json(lessons);
     } catch (error) {
+        db.prepare("DETACH DATABASE usersDb;").run();
         res.status(500).json({ error: error.message });
     }
 }
