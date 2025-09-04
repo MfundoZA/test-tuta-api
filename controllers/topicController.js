@@ -9,7 +9,7 @@ db.prepare(`
         title TEXT NOT NULL,
         subject_id INTEGER,
         year_level INTEGER,
-        term_id INTEGER
+        period INTEGER
     )
 `).run();
 
@@ -103,7 +103,7 @@ const getTopicsBySubjectGradeTerm = (req, res) => {
     var term = parseInt(req.params.term.replace(':', ''));
 
     try {
-        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ?, year_level = ?, term_id = ?').get(subject, grade, term);
+        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ?, year_level = ?, period = ?').get(subject, grade, term);
         if (!topics) {
             return res.status(404).json({ message: 'Topics not found' });
         }
@@ -122,15 +122,15 @@ const createTopic = (req, res) => {
         const {
             title,
             subjectId,
-            gradeId,
-            termId
+            yearLevel,
+            period
         } = req.body;
 
         const result = db.prepare(`
             INSERT INTO topics (
-                title, subject_id, year_level, term_id
+                title, subject_id, year_level, period
             ) VALUES (?, ?, ?, ?)
-        `).run(title, subjectId, gradeId, termId);
+        `).run(title, subjectId, yearLevel, period);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
@@ -151,15 +151,15 @@ const updateTopic = (req, res) => {
         const {
             title,
             subjectId,
-            gradeId,
-            termId
+            yearLevel,
+            period
         } = req.body;
 
         const result = db.prepare(`
             UPDATE topics 
-            SET title = ?, subject_id = ?, year_level = ?, term_id = ?
+            SET title = ?, subject_id = ?, year_level = ?, period = ?
             WHERE topic_id = ?
-        `).run(title, subjectId, gradeId, termId, topicId);
+        `).run(title, subjectId, yearLevel, period, topicId);
 
         if (result.changes === 0) {
             return res.status(404).json({ message: 'Topic not found' });
