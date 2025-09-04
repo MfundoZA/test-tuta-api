@@ -8,7 +8,7 @@ db.prepare(`
         topic_id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         subject_id INTEGER,
-        grade_id INTEGER,
+        year_level INTEGER,
         term_id INTEGER
     )
 `).run();
@@ -82,7 +82,7 @@ const getTopicsBySubjectAndGrade = (req, res) => {
 
 
     try {
-        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ? AND grade_id = ?').all(subject, grade);
+        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ? AND year_level = ?').all(subject, grade);
 
         if (!topics) {
             return res.status(404).json({ message: 'Topics not found' });
@@ -103,7 +103,7 @@ const getTopicsBySubjectGradeTerm = (req, res) => {
     var term = parseInt(req.params.term.replace(':', ''));
 
     try {
-        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ?, grade_id = ?, term_id = ?').get(subject, grade, term);
+        const topics = db.prepare('SELECT * FROM topics WHERE subject_id = ?, year_level = ?, term_id = ?').get(subject, grade, term);
         if (!topics) {
             return res.status(404).json({ message: 'Topics not found' });
         }
@@ -128,7 +128,7 @@ const createTopic = (req, res) => {
 
         const result = db.prepare(`
             INSERT INTO topics (
-                title, subject_id, grade_id, term_id
+                title, subject_id, year_level, term_id
             ) VALUES (?, ?, ?, ?)
         `).run(title, subjectId, gradeId, termId);
 
@@ -157,7 +157,7 @@ const updateTopic = (req, res) => {
 
         const result = db.prepare(`
             UPDATE topics 
-            SET title = ?, subject_id = ?, grade_id = ?, term_id = ?
+            SET title = ?, subject_id = ?, year_level = ?, term_id = ?
             WHERE topic_id = ?
         `).run(title, subjectId, gradeId, termId, topicId);
 

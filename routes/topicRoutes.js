@@ -21,7 +21,7 @@ router.get('/:id', getTopicById);
 // GET /topics/title/:title - Get topics by title
 router.get('/title/:title', getTopicsByTitle);
 
-router.get('/subject/:subject/grade/:grade', getTopicsBySubjectAndGrade);
+router.get('/subject/:subject/grade/:year', getTopicsBySubjectAndGrade);
 
 // POST /topics - Create new topic
 router.post('/', createTopic);
