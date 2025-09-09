@@ -115,8 +115,10 @@ const updateSubject = (req, res) => {
 // How to make delete request
 
 const deleteSubject = (req, res) => {
+    var subjectId = parseInt(req.params.id.replace(':', ''));
+
     try {
-        const result = db.prepare('DELETE FROM subjects WHERE subject_id = ?').run(req.params.id);
+        const result = db.prepare('DELETE FROM subjects WHERE subject_id = ?').run(subjectId);
 
         if (result.changes === 0) {
             return res.status(404).json({ message: 'Subject not found' });

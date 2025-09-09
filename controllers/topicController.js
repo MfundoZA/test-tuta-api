@@ -78,7 +78,7 @@ const getTopicsByTitle = (req, res) => {
 
 const getTopicsBySubjectAndGrade = (req, res) => {
     var subject = parseInt(req.params.subject.replace(':', ''));
-    var grade = parseInt(req.params.grade.replace(':', ''));
+    var grade = parseInt(req.params.year.replace(':', ''));
 
 
     try {
