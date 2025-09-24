@@ -12,8 +12,6 @@ db.prepare(`
         thumbnail_url TEXT,
         duration INTEGER NOT NULL,
         subject_id INTEGER NOT NULL,
-        grade_id INTEGER NOT NULL,
-        term_id INTEGER NOT NULL,
         topic_id INTEGER NOT NULL,
         subtopic_id INTEGER NOT NULL,
         created_by INTEGER NOT NULL,
@@ -207,8 +205,6 @@ const createLesson = (req, res) => {
             thumbnailUrl,
             duration,
             subjectId,
-            gradeId,
-            termId,
             topicId,
             subtopicId,
             createdBy
@@ -245,8 +241,6 @@ const updateLesson = (req, res) => {
             thumbnailUrl,
             duration,
             subjectId,
-            gradeId,
-            termId,
             topicId,
             subtopicId,
             createdBy,
@@ -259,8 +253,7 @@ const updateLesson = (req, res) => {
         const result = db.prepare(`
             UPDATE lessons 
             SET title = ?, description = ?, video_url = ?, 
-                thumbnail_url = ?, duration = ?, subject_id = ?,
-                grade_id = ?, term_id = ?, topic_id = ?, subtopic_id = ?, is_published = ?,
+                thumbnail_url = ?, duration = ?, subject_id = ?, topic_id = ?, subtopic_id = ?, is_published = ?,
                 published_at = CASE WHEN is_published = 1 AND published_at IS NULL 
                                   THEN datetime('now') 
                                   ELSE published_at 
