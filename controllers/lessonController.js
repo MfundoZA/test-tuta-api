@@ -213,8 +213,7 @@ const createLesson = (req, res) => {
         const result = db.prepare(`
             INSERT INTO lessons (
                 title, description, video_url, thumbnail_url, 
-                duration, subject_id, topic_id, subtopic_id, created_by,
-                uploaded_at, is_published, published_at, view_count
+                duration, subject_id, topic_id, subtopic_id, created_by
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, null, 0)
         `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, topicId, subtopicId, createdBy);
 
