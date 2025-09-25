@@ -214,7 +214,7 @@ const createLesson = (req, res) => {
             INSERT INTO lessons (
                 title, description, video_url, thumbnail_url, 
                 duration, subject_id, topic_id, subtopic_id, created_by
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'), 0, null, 0)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, topicId, subtopicId, createdBy);
 
         res.header('Access-Control-Allow-Origin', '*');
