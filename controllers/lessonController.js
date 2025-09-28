@@ -1,4 +1,6 @@
 const Database = require('better-sqlite3');
+const fs = require('fs');
+const path = require('path');
 
 // Initialize SQLite database
 const db = new Database('./data/lessons.db');
@@ -63,7 +65,39 @@ const getLessonById = (req, res) => {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-};
+}
+
+const getLessonVideo = (req, res) => {
+    var videoCode = req.params.videoCode.replace(':', '');
+
+    const videoPath = path.join(__dirname, '../../media', `${videoCode}.mp4`);
+    const stat = fs.statSync(videoPath);
+    const fileSize = stat.size;
+    const range = req.headers.range;
+
+    if (range) {
+        const parts = range.replace(/bytes=/, "").split("-");
+        const start = parseInt(parts[0], 10);
+        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+        const chunksize = (end - start) + 1;
+        const head = {
+                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                'Accept-Ranges': 'bytes',
+                'Content-Length': chunksize,
+                'Content-Type': 'video/mp4', // Adjust Content-Type based on your video format
+            };
+            res.writeHead(206, head);
+            const videoStream = fs.createReadStream(videoPath, { start, end });
+            videoStream.pipe(res);
+        } else {
+            const head = {
+                'Content-Length': fileSize,
+                'Content-Type': 'video/mp4', // Adjust Content-Type
+            };
+            res.writeHead(200, head);
+            fs.createReadStream(videoPath).pipe(res);
+        }
+}
 
 // Todo: Get lesson by title
 const getLessonsByTitle = (req, res) => {
@@ -167,7 +201,7 @@ const getLessonsByTopic = (req, res) => {
         var lessons;
 
         if (req.params.topicId === 'null' && req.params.subtopicId === 'null') {
-            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId);
+            lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ?').all(req.params.subjectId);
         }
         else if (req.params.topicId != 'null' && req.params.subtopicId === 'null') {
             lessons = db.prepare('SELECT * FROM lessons WHERE topic_id = ?').all(req.params.topicId);
