@@ -335,6 +335,7 @@ module.exports = {
     getLessonsByTutor,
     getLessonsBySubject,
     getLessonsByTopic,
+    getLessonVideo,
     createLesson,
     updateLesson,
     deleteLesson
