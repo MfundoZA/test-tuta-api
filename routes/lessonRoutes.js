@@ -3,12 +3,13 @@ const {
   getLessons,
   getLessonById,
   getLessonsByTitle,
+  getLessonsByTutor,
+  getLessonsBySubject,
+  getLessonsByTopic,
+  getLessonVideo,
   createLesson,
   updateLesson,
   deleteLesson,
-  getLessonsByTutor,
-  getLessonsBySubject,
-  getLessonsByTopic
 } = require('../controllers/lessonController');
 
 const router = express.Router();
