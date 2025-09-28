@@ -80,29 +80,32 @@ const getLessonVideo = (req, res) => {
         const start = parseInt(parts[0], 10);
         const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
         const chunksize = (end - start) + 1;
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+        res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
         const head = {
-                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-                'Accept-Ranges': 'bytes',
-                'Content-Length': chunksize,
-                'Content-Type': 'video/mp4', // Adjust Content-Type based on your video format
-            };
-            res.writeHead(206, head);
-            const videoStream = fs.createReadStream(videoPath, { start, end });
-            videoStream.pipe(res);
-        } else {
-            const head = {
-                'Content-Length': fileSize,
-                'Content-Type': 'video/mp4', // Adjust Content-Type
-            };
-            res.writeHead(200, head);
-            fs.createReadStream(videoPath).pipe(res);
-        }
+            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+            'Accept-Ranges': 'bytes',
+            'Content-Length': chunksize,
+            'Content-Type': 'video/mp4', // Adjust Content-Type based on your video format
+        };
+        res.writeHead(206, head);
+        const videoStream = fs.createReadStream(videoPath, { start, end });
+        videoStream.pipe(res);
+    } else {
+        const head = {
+            'Content-Length': fileSize,
+            'Content-Type': 'video/mp4', // Adjust Content-Type
+        };
+        res.writeHead(200, head);
+        fs.createReadStream(videoPath).pipe(res);
+    }
 }
 
 // Todo: Get lesson by title
 const getLessonsByTitle = (req, res) => {
     var title = req.params.title.replace(':', '');
-    
+
     console.log(title);
 
     try {
@@ -187,7 +190,7 @@ const getLessonsByTopic = (req, res) => {
                     FROM lessons 
                     JOIN usersDb.users AS users ON lessons.created_by = users.userId 
     `;
-    var whereStmt= '';
+    var whereStmt = '';
 
     if (req.params.topicId != 'null') {
         whereStmt = ' AND topic_id = ?';
@@ -208,7 +211,7 @@ const getLessonsByTopic = (req, res) => {
         }
         else if (req.params.topicId === 'null' && req.params.subtopicId != 'null') {
             console.log('Condition met!');
-            lessons = db.prepare( query + ' WHERE subtopic_id = ?').all(req.params.subtopicId);
+            lessons = db.prepare(query + ' WHERE subtopic_id = ?').all(req.params.subtopicId);
         }
         else {
             lessons = db.prepare('SELECT * FROM lessons WHERE subject_id = ? AND grade_id = ? AND term_id = ? AND topic_id = ? AND subtopic_id = ?').all(req.params.subjectId, req.params.gradeId, req.params.termId, req.params.topicId, req.params.subtopicId);
@@ -314,7 +317,7 @@ const deleteLesson = (req, res) => {
 
     try {
         const result = db.prepare('DELETE FROM lessons WHERE lesson_id = ?').run(req.params.id);
-        
+
         if (result.changes === 0) {
             return res.status(404).json({ message: 'Lesson not found' });
         }
