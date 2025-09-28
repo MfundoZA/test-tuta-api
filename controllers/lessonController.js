@@ -1,7 +1,6 @@
 const Database = require('better-sqlite3');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors');
 
 // Initialize SQLite database
 const db = new Database('./data/lessons.db');
