@@ -59,6 +59,8 @@ const getSubjectById = (req, res) => {
 
 // Create a new subject
 const createSubject = (req, res) => {
+    console.log('BODY:', req.body);
+
     try {
         const {
             name,
