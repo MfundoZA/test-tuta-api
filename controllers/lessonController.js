@@ -68,9 +68,9 @@ const getLessonById = (req, res) => {
 }
 
 const getLessonVideo = (req, res) => {
-    var videoCode = req.params.videoCode.replace(':', '');
+    var videoTitle = req.params.videoCode.replace(':', '');
 
-    const videoPath = path.join(__dirname, '../../media', `${videoCode}.mp4`);
+    const videoPath = path.join(__dirname, '../../media/', videoTitle);
     const stat = fs.statSync(videoPath);
     const fileSize = stat.size;
     const range = req.headers.range;
@@ -80,6 +80,11 @@ const getLessonVideo = (req, res) => {
         const start = parseInt(parts[0], 10);
         const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
         const chunksize = (end - start) + 1;
+
+        console.log(`start: ${start}`)
+        console.log(`end: ${end}`)
+        console.log(`chunksize: ${chunksize}`)
+        
         const head = {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
