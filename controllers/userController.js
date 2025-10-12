@@ -1,7 +1,12 @@
+const path = require('path');
 const Database = require('better-sqlite3');
 
+const controllerDir = __dirname; 
+
+const dbPath = path.join(controllerDir, '..', 'data', 'users.db'); 
+
 // Initialize SQLite database
-const db = new Database('./data/users.db');
+const db = new Database(dbPath, { verbose: console.log });
 
 // Create users table if it doesn't exist
 db.prepare(`
@@ -22,8 +27,14 @@ db.prepare(`
 // Get all users
 const getUsers = async (req, res) => {
   try {
-    const stmt = db.prepare('SELECT * FROM users');
-    const users = stmt.all();
+    let users;
+    if (req.query.userType && req.query.userType.trim() !== '') {
+      const stmt = db.prepare('SELECT * FROM users WHERE userType = ?');
+      users = stmt.all(req.query.userType);
+    } else {
+      const stmt = db.prepare('SELECT * FROM users');
+      users = stmt.all();
+    }
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });

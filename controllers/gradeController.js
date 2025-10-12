@@ -1,3 +1,5 @@
+// Todo: rename grade to level throughout the codebase
+
 const Database = require('better-sqlite3');
 
 // Initialize SQLite database
