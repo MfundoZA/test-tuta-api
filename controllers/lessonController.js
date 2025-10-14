@@ -1,9 +1,15 @@
+const path = require('path');
 const Database = require('better-sqlite3');
 const fs = require('fs');
-const path = require('path');
+
+const controllerDir = __dirname; 
+
+const dbPath = path.join(controllerDir, '..', 'data', 'users.db'); 
+
+console.log('Database path:', dbPath);
 
 // Initialize SQLite database
-const db = new Database('./data/lessons.db');
+const db = new Database(dbPath);
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS lessons (

@@ -1,9 +1,14 @@
-// Todo: rename grade to level throughout the codebase
-
+const path = require('path');
 const Database = require('better-sqlite3');
 
+const controllerDir = __dirname; 
+
+const dbPath = path.join(controllerDir, '..', 'data', 'grades.db'); 
+
+console.log('Database path:', dbPath);
+
 // Initialize SQLite database
-const db = new Database('./data/grades.db');
+const db = new Database(dbPath);
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS grades (

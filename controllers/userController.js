@@ -5,8 +5,10 @@ const controllerDir = __dirname;
 
 const dbPath = path.join(controllerDir, '..', 'data', 'users.db'); 
 
+console.log('Database path:', dbPath);
+
 // Initialize SQLite database
-const db = new Database(dbPath, { verbose: console.log });
+const db = new Database(dbPath);
 
 // Create users table if it doesn't exist
 db.prepare(`

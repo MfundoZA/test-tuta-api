@@ -1,7 +1,14 @@
+const path = require('path');
 const Database = require('better-sqlite3');
 
+const controllerDir = __dirname; 
+
+const dbPath = path.join(controllerDir, '..', 'data', 'subtopics.db'); 
+
+console.log('Database path:', dbPath);
+
 // Initialize SQLite database
-const db = new Database('./data/subtopics.db');
+const db = new Database(dbPath);
 
 db.prepare(`
     CREATE TABLE IF NOT EXISTS subtopics (
