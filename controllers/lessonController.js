@@ -74,7 +74,7 @@ const getLessonById = (req, res) => {
 }
 
 const getLessonVideo = (req, res) => {
-    var videoTitle = req.params.videoCode.replace(':', '');
+    var videoTitle = req.query.videoCode.replace(':', '');
 
     const videoPath = path.join(__dirname, '../../media/', videoTitle);
     const stat = fs.statSync(videoPath);
