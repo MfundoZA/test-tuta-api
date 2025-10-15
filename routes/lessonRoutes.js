@@ -34,7 +34,7 @@ router.get('/subject/:subjectId/grade/:gradeId/term/:termId', getLessonsBySubjec
 router.get('/topic/:topicId/subtopic/:subtopicId/', getLessonsByTopic);
 
 // GET /lessons/video/:videoTitle - Get lesson video
-router.get('/video/:videoTitle', getLessonVideo);
+router.get('/video/:videoCode', getLessonVideo);
 
 // POST /lessons - Create new lesson
 router.post('/', createLesson);
