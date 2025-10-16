@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const controllerDir = __dirname; 
 
-const dbPath = path.join(controllerDir, '..', 'data', 'users.db'); 
+const dbPath = path.join(controllerDir, '..', 'data', 'lessons.db'); 
 
 console.log('Database path:', dbPath);
 
