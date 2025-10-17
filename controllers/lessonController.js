@@ -110,6 +110,7 @@ const getLessonVideo = (req, res) => {
             'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept',
             'Content-Length': fileSize,
             'Content-Type': 'video/mp4', // Adjust Content-Type
+            'Accept-Ranges': 'bytes'
         };
         res.writeHead(200, head);
         fs.createReadStream(videoPath).pipe(res);
