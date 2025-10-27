@@ -134,6 +134,11 @@ const createTopic = (req, res) => {
         } = req.body;
 
         console.log(req.body);
+
+        console.log('Title: ' + title);
+        console.log('Subject Id: ' + subjectId);
+        console.log('Year Level: ' + yearLevel);
+        console.log('Semester: ' + semester);
         
         const result = db.prepare(`
             INSERT INTO topics (
