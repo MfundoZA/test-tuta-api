@@ -136,8 +136,8 @@ const createTopic = (req, res) => {
         console.log(req.body);
 
         console.log('Title: ' + title);
-        console.log('Subject Id: ' + subject_id);
-        console.log('Year Level: ' + year_level);
+        console.log('Subject Id: ' + req.body.subject_id);
+        console.log('Year Level: ' + req.body.year_level);
         console.log('Semester: ' + semester);
         
         const result = db.prepare(`
