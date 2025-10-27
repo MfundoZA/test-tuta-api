@@ -136,15 +136,15 @@ const createTopic = (req, res) => {
         console.log(req.body);
 
         console.log('Title: ' + title);
-        console.log('Subject Id: ' + subjectId);
-        console.log('Year Level: ' + yearLevel);
+        console.log('Subject Id: ' + subject_id);
+        console.log('Year Level: ' + year_level);
         console.log('Semester: ' + semester);
         
         const result = db.prepare(`
             INSERT INTO topics (
                 title, subject_id, year_level, period
             ) VALUES (?, ?, ?, ?)
-        `).run(title, req.body.subjectId, req.body.yearLevel, semester);
+        `).run(title, req.body.subject_id, req.body.year_level, semester);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
