@@ -128,16 +128,18 @@ const createTopic = (req, res) => {
     try {
         const {
             title,
-            subjectId,
             yearLevel,
-            period
+            semester,
+            subjectId
         } = req.body;
 
+        console.log(req.body);
+        
         const result = db.prepare(`
             INSERT INTO topics (
                 title, subject_id, year_level, period
             ) VALUES (?, ?, ?, ?)
-        `).run(title, subjectId, yearLevel, period);
+        `).run(title, subjectId, yearLevel, semester);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
