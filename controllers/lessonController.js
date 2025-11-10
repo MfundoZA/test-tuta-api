@@ -259,7 +259,7 @@ const createLesson = (req, res) => {
             subject_id,
             topic_id,
             subtopic_id,
-            createdBy
+            created_by
         } = req.body;
 
         const result = db.prepare(`
