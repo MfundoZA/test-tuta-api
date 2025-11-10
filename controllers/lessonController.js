@@ -253,12 +253,12 @@ const createLesson = (req, res) => {
         const {
             title,
             description,
-            videoUrl,
-            thumbnailUrl,
+            video_url,
+            thumbnail_url,
             duration,
-            subjectId,
-            topicId,
-            subtopicId,
+            subject_id,
+            topic_id,
+            subtopic_id,
             createdBy
         } = req.body;
 
@@ -267,7 +267,7 @@ const createLesson = (req, res) => {
                 title, description, video_url, thumbnail_url, 
                 duration, subject_id, topic_id, subtopic_id, created_by
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `).run(title, description, videoUrl, thumbnailUrl, duration, subjectId, topicId, subtopicId, createdBy);
+        `).run(title, description, video_url, thumbnail_url, duration, subject_id, topic_id, subtopic_id, createdBy);
 
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
